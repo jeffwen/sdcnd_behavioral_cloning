@@ -7,12 +7,11 @@ from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 
-ON_SERVER = False
+
 if platform.system() == "Linux":
     col_names = ["center","left","right","steering","throttle","brake","speed"]
     proj_path = '/home/carnd/sdcnd_behavioral_cloning/'
     folder_path = '/home/carnd/sdcnd_behavioral_cloning/training_video_log/driving_log.csv'
-    ON_SERVER = True
 elif platform.system() == "Darwin" and platform.uname()[1] == 'C02RH2F7G8WM':
     folder_path = '/Users/jwen/Python/Projects/sdcnd_behavioral_cloning/training_video_log/driving_log.csv'
     proj_path = '/Users/jwen/Python/Projects/sdcnd_behavioral_cloning/'
@@ -22,6 +21,7 @@ elif platform.system() == "Darwin":
 else:
     print("Unknown environment")
 
+    
 def read_input(folder_path):
 
     lines = []
@@ -39,6 +39,7 @@ def read_input(folder_path):
     train_lines, validation_lines = train_test_split(lines_shuffled, test_size = 0.2)
             
     return train_lines, validation_lines
+
 
 def generate_data(observations, batch_size = 48):
 
