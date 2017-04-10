@@ -3,10 +3,8 @@ import pandas as pd
 import numpy as np
 import csv
 import platform
-from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
-
 
 if platform.system() == "Linux":
     col_names = ["center","left","right","steering","throttle","brake","speed"]
@@ -59,7 +57,7 @@ def generate_data(observations, batch_size = 48):
             steering_correction = 0.25 ## applying correction to left and right steering angles
 
             ## loop through lines and append images path/ steering data to new lists
-            for observation in tqdm(batch_obs):
+            for observation in batch_obs:
                 center_image_path = proj_path + 'training_video_log/IMG/'+observation[0].split('/')[-1]
                 left_image_path = proj_path + 'training_video_log/IMG/'+observation[1].split('/')[-1]
                 right_image_path = proj_path + 'training_video_log/IMG/'+observation[2].split('/')[-1]
@@ -69,9 +67,9 @@ def generate_data(observations, batch_size = 48):
                 right_images.append(cv2.imread(right_image_path))
         
                 ## append the steering angles and correct for left/right images
-                steering_angle_center.append(float(line[3]))
-                steering_angle_left.append(float(line[3]) + steering_correction)
-                steering_angle_right.append(float(line[3]) - steering_correction)
+                steering_angle_center.append(float(observation[3]))
+                steering_angle_left.append(float(observation[3]) + steering_correction)
+                steering_angle_right.append(float(observation[3]) - steering_correction)
         
             images = center_images + left_images + right_images
             steering_angles = steering_angle_center + steering_angle_left + steering_angle_right
