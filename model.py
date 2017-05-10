@@ -63,5 +63,6 @@ checkpoint = ModelCheckpoint(model_path, verbose=0, save_best_only=True)
 callbacks_list = [checkpoint]
 
 ## fit the model
-model.fit_generator(train_generator, samples_per_epoch=len(train_observations), validation_data=validation_generator, nb_val_samples=len(validation_observations), nb_epoch=5, callbacks = callbacks_list)
+model.fit_generator(train_generator, samples_per_epoch=len(train_observations), validation_data=validation_generator,
+                    nb_val_samples=len(validation_observations), nb_epoch=5, callbacks = callbacks_list)
 
