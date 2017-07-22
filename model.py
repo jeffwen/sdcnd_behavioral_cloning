@@ -35,7 +35,7 @@ validation_generator = data.generate_data(validation_observations)
 model = Sequential()
 
 ## cropping images
-model.add(Cropping2D(cropping=((50,20), (0,0)), input_shape=(160,320,3)))
+model.add(Cropping2D(cropping=((60,20), (0,0)), input_shape=(160,320,3)))
 
 ## batch normlization
 model.add(BatchNormalization())
