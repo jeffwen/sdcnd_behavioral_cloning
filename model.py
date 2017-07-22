@@ -31,38 +31,39 @@ train_generator = data.generate_data(train_observations)
 validation_generator = data.generate_data(validation_observations)
 
 
-# ## build Keras model
-# model = Sequential()
-#
-# ## cropping images
-# model.add(Cropping2D(cropping=((50,20), (0,0)), input_shape=(160,320,3)))
-#
-# ## batch normlization
-# model.add(BatchNormalization())
-#
-# ## Convolutional layers
-# model.add(Conv2D(24, 5, 5, subsample=(2,2), activation='relu'))
-# model.add(Conv2D(36, 5, 5, subsample=(2,2), activation='relu'))
-# model.add(Conv2D(48, 5, 5, subsample=(2,2), activation='relu'))
-# model.add(Conv2D(64, 3, 3, subsample=(1,1), activation='relu'))
-# model.add(Conv2D(64, 3, 3, subsample=(1,1), activation='relu'))
-#
-# ## fully connected layers
-# model.add(Flatten())
-# model.add(Dense(1164, activation='relu'))
-# model.add(Dense(100, activation='relu'))
-# model.add(Dense(50, activation='relu'))
-# model.add(Dense(10, activation='relu'))
-# model.add(Dense(1))
-#
-# ## compile
-# model.compile(loss='mse', optimizer='adam')
+## build Keras model
+model = Sequential()
+
+## cropping images
+model.add(Cropping2D(cropping=((50,20), (0,0)), input_shape=(160,320,3)))
+
+## batch normlization
+model.add(BatchNormalization())
+
+## Convolutional layers
+model.add(Conv2D(24, 5, 5, subsample=(2,2), activation='elu'))
+model.add(Conv2D(36, 5, 5, subsample=(2,2), activation='elu'))
+model.add(Conv2D(48, 5, 5, subsample=(2,2), activation='elu'))
+model.add(Conv2D(64, 3, 3, activation='elu'))
+model.add(Conv2D(64, 3, 3, activation='elu'))
+
+model.add(Dropout(0.5))
+## fully connected layers
+model.add(Flatten())
+# model.add(Dense(1164, activation='elu'))
+model.add(Dense(100, activation='elu'))
+model.add(Dense(50, activation='elu'))
+model.add(Dense(10, activation='elu'))
+model.add(Dense(1))
+
+## compile
+model.compile(loss='mse', optimizer='adam')
 
 ## load and continue training the pre-trained model on more data
-model = load_model(proj_path + "model.h5")
+# model = load_model(proj_path + "model.h5")
 
 # checkpoint and save best model
-model_path="model_new.h5"
+model_path = "model.h5"
 checkpoint = ModelCheckpoint(model_path, verbose=0, save_best_only=True)
 callbacks_list = [checkpoint]
 
