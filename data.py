@@ -47,32 +47,32 @@ def generate_data(observations, batch_size=48):
             batch_obs = observations[offset:offset+batch_size]
 
             center_images = []
-            left_images = []
-            right_images = []
+            # left_images = []
+            # right_images = []
 
             steering_angle_center = []
-            steering_angle_left = []
-            steering_angle_right = []
+            # steering_angle_left = []
+            # steering_angle_right = []
 
-            steering_correction = 0.25 ## applying correction to left and right steering angles
+            # steering_correction = 0.25 ## applying correction to left and right steering angles
 
             ## loop through lines and append images path/ steering data to new lists
             for observation in batch_obs:
                 center_image_path = proj_path + 'training_video_log/IMG/'+observation[0].split('/')[-1]
-                left_image_path = proj_path + 'training_video_log/IMG/'+observation[1].split('/')[-1]
-                right_image_path = proj_path + 'training_video_log/IMG/'+observation[2].split('/')[-1]
+                # left_image_path = proj_path + 'training_video_log/IMG/'+observation[1].split('/')[-1]
+                # right_image_path = proj_path + 'training_video_log/IMG/'+observation[2].split('/')[-1]
 
                 center_images.append(cv2.imread(center_image_path))
-                left_images.append(cv2.imread(left_image_path))
-                right_images.append(cv2.imread(right_image_path))
+                # left_images.append(cv2.imread(left_image_path))
+                # right_images.append(cv2.imread(right_image_path))
 
                 ## append the steering angles and correct for left/right images
                 steering_angle_center.append(float(observation[3]))
-                steering_angle_left.append(float(observation[3]) + steering_correction)
-                steering_angle_right.append(float(observation[3]) - steering_correction)
+                # steering_angle_left.append(float(observation[3]) + steering_correction)
+                # steering_angle_right.append(float(observation[3]) - steering_correction)
 
-            images = center_images + left_images + right_images
-            steering_angles = steering_angle_center + steering_angle_left + steering_angle_right
+            images = center_images# + left_images + right_images
+            steering_angles = steering_angle_center# + steering_angle_left + steering_angle_right
 
             X = np.array(images)
             y = np.array(steering_angles)
