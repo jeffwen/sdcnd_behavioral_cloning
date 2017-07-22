@@ -68,8 +68,8 @@ def generate_data(observations, batch_size=48):
 
                 ## append the steering angles and correct for left/right images
                 steering_angle_center.append(float(observation[3]))
-                steering_angle_left.append(float(observation[3]) - steering_correction)
-                steering_angle_right.append(float(observation[3]) + steering_correction)
+                steering_angle_left.append(float(observation[3]) + steering_correction)
+                steering_angle_right.append(float(observation[3]) - steering_correction)
 
             images = center_images + left_images + right_images
             steering_angles = steering_angle_center + steering_angle_left + steering_angle_right
