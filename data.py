@@ -38,12 +38,12 @@ def read_input(folder_path):
 
     return train_lines, validation_lines
 
+## convert color of the input image to YUV as mentioned in nvidia paper
+def preprocess_image(img, color_conversion=cv2.COLOR_BGR2YUV):
+    converted_img = cv2.cvtColor(img,color_conversion)
+    cropped_img = converted_img[60:140,:,:]
 
-def read_image(path, color_conversion=cv2.COLOR_BGR2RGB):
-    return cv2.cvtColor(cv2.imread(path),cv2.COLOR_BGR2RGB)
-
-def crop_image(img):
-    return img[60:140,:,:]
+    return cropped_img
 
 
 def generate_data(observations, batch_size=48):
@@ -69,9 +69,9 @@ def generate_data(observations, batch_size=48):
                 left_image_path = proj_path + 'training_video_log/IMG/'+observation[1].split('/')[-1]
                 right_image_path = proj_path + 'training_video_log/IMG/'+observation[2].split('/')[-1]
 
-                center_images.append(crop_image(read_image(center_image_path)))
-                left_images.append(crop_image(read_image(left_image_path)))
-                right_images.append(crop_image(read_image(right_image_path)))
+                center_images.append(preprocess_image(cv2.imread(center_image_path)))
+                left_images.append(preprocess_image(cv2.imread(left_image_path)))
+                right_images.append(preprocess_image(cv2.imread(right_image_path)))
 
                 ## append the steering angles and correct for left/right images
                 steering_angle_center.append(float(observation[3]))

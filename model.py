@@ -5,7 +5,7 @@ import seaborn as sns
 import platform
 from keras.models import Sequential, load_model
 from keras.layers import Conv2D, MaxPooling2D, Cropping2D
-from keras.layers import Activation, Dropout, Flatten, Dense, BatchNormalization
+from keras.layers import Activation, Dropout, Flatten, Dense, BatchNormalization, Lambda
 from keras.callbacks import ModelCheckpoint
 
 
@@ -38,7 +38,8 @@ model = Sequential()
 # model.add(Cropping2D(cropping=((60,20), (0,0)), input_shape=(160,320,3)))
 
 ## batch normlization
-model.add(BatchNormalization())
+# model.add(BatchNormalization())
+model.add(Lambda(lambda x: x/127.5 - 1.0,input_shape=(80,320,3)))
 
 ## Convolutional layers
 model.add(Conv2D(24, 5, 5, subsample=(2,2), activation='elu'))
