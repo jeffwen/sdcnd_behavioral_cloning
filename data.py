@@ -72,7 +72,7 @@ def generate_data(observations, batch_size=128):
                 right_image_path = proj_path + 'training_video_log/IMG/'+observation[2].split('/')[-1]
 
                 if np.abs(float(observation[3])) < 0.3:
-                    if random.random() > 0.6:
+                    if random.random() > 0.5:
                         center_images.append(preprocess_image(cv2.imread(center_image_path)))
                         steering_angle_center.append(float(observation[3]))
                         
