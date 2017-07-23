@@ -71,12 +71,12 @@ def generate_data(observations, batch_size=128):
                 left_image_path = proj_path + 'training_video_log/IMG/'+observation[1].split('/')[-1]
                 right_image_path = proj_path + 'training_video_log/IMG/'+observation[2].split('/')[-1]
 
-                if np.abs(observation[3]) < 0.3:
+                if np.abs(float(observation[3])) < 0.3:
                     if random.random() > 0.8:
                         center_images.append(preprocess_image(cv2.imread(center_image_path)))
                         steering_angle_center.append(float(observation[3]))
                         
-                if np.abs(observation[3]) >= 0.3:
+                if np.abs(float(observation[3])) >= 0.3:
                     if random.random() > 0.5:
                         left_images.append(preprocess_image(cv2.imread(left_image_path)))
                         right_images.append(preprocess_image(cv2.imread(right_image_path)))
@@ -93,7 +93,7 @@ def generate_data(observations, batch_size=128):
                         steering_angle_left.append(float(observation[3]) + steering_correction)
                         steering_angle_right.append(float(observation[3]) - steering_correction)
 
-                if np.abs(observation[3]) >= 0.5:
+                if np.abs(float(observation[3])) >= 0.5:
                         left_images.append(preprocess_image(cv2.imread(left_image_path)))
                         left_images.append(preprocess_image(cv2.imread(left_image_path)))
 
@@ -108,8 +108,8 @@ def generate_data(observations, batch_size=128):
 
 
                         ## append the steering angles and correct for left/right images
-                        steering_angle_left.append(float(observation[3]) + steering_correction)
-                        steering_angle_right.append(float(observation[3]) - steering_correction)
+                        steering_angle_left.append(float(observation[3])*-1 + steering_correction)
+                        steering_angle_right.append(float(observation[3])*-1 - steering_correction)
 
             images = center_images + left_images + right_images
             steering_angles = steering_angle_center + steering_angle_left + steering_angle_right
