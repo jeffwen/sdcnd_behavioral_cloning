@@ -26,6 +26,9 @@ else:
 ## read in the training data and split into train and validation    
 train_observations, validation_observations = data.read_input(folder_path)
 
+## distribute data
+train_observations = data.distribute_data(train_observations)
+
 ## create data generators
 train_generator = data.generate_data(train_observations)
 validation_generator = data.generate_data(validation_observations)
