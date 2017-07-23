@@ -11,7 +11,7 @@ import eventlet.wsgi
 from PIL import Image
 from flask import Flask
 from io import BytesIO
-from model import preprocess_image
+from data import preprocess_image
 import cv2
 
 from keras.models import load_model
@@ -45,8 +45,8 @@ class SimplePIController:
         return self.Kp * self.error + self.Ki * self.integral
 
 
-controller = SimplePIController(0.1, 0.002)
-set_speed = 9
+controller = SimplePIController(0.05, 0.002)
+set_speed = 10
 controller.set_desired(set_speed)
 
 
@@ -68,7 +68,6 @@ def telemetry(sid, data):
         steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
 
         throttle = controller.update(float(speed))
-        # throttle = (26-np.float32(speed))*0.5
 
         print(steering_angle, throttle, speed)
         send_control(steering_angle, throttle)

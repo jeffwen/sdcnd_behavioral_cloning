@@ -2,6 +2,7 @@ import cv2
 import pandas as pd
 import numpy as np
 import csv
+import random
 import platform
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
@@ -34,7 +35,7 @@ def read_input(folder_path):
     lines_shuffled = shuffle(lines)
 
     ## split into training and validation data sets
-    train_lines, validation_lines = train_test_split(lines_shuffled, test_size = 0.2)
+    train_lines, validation_lines = train_test_split(lines_shuffled, test_size=0.2)
 
     return train_lines, validation_lines
 
@@ -46,7 +47,7 @@ def preprocess_image(img, color_conversion=cv2.COLOR_BGR2YUV):
     return cropped_img
 
 
-def generate_data(observations, batch_size=48):
+def generate_data(observations, batch_size=128):
 
     ## set up generator
     while True:
@@ -65,18 +66,50 @@ def generate_data(observations, batch_size=48):
 
             ## loop through lines and append images path/ steering data to new lists
             for observation in batch_obs:
+
                 center_image_path = proj_path + 'training_video_log/IMG/'+observation[0].split('/')[-1]
                 left_image_path = proj_path + 'training_video_log/IMG/'+observation[1].split('/')[-1]
                 right_image_path = proj_path + 'training_video_log/IMG/'+observation[2].split('/')[-1]
 
-                center_images.append(preprocess_image(cv2.imread(center_image_path)))
-                left_images.append(preprocess_image(cv2.imread(left_image_path)))
-                right_images.append(preprocess_image(cv2.imread(right_image_path)))
+                if np.abs(observation[3]) < 0.3:
+                    if random.random() > 0.8:
+                        center_images.append(preprocess_image(cv2.imread(center_image_path)))
+                        steering_angle_center.append(float(observation[3]))
+                        
+                if np.abs(observation[3]) >= 0.3:
+                    if random.random() > 0.5:
+                        left_images.append(preprocess_image(cv2.imread(left_image_path)))
+                        right_images.append(preprocess_image(cv2.imread(right_image_path)))
 
-                ## append the steering angles and correct for left/right images
-                steering_angle_center.append(float(observation[3]))
-                steering_angle_left.append(float(observation[3]) + steering_correction)
-                steering_angle_right.append(float(observation[3]) - steering_correction)
+                        ## append the steering angles and correct for left/right images
+                        steering_angle_left.append(float(observation[3]) + steering_correction)
+                        steering_angle_right.append(float(observation[3]) - steering_correction)
+
+                        ## flip images
+                        right_images.append(preprocess_image(cv2.flip(cv2.imread(left_image_path), 1)))
+                        left_images.append(preprocess_image(cv2.flip(cv2.imread(right_image_path), 1)))
+
+                        ## append the steering angles and correct for left/right images
+                        steering_angle_left.append(float(observation[3]) + steering_correction)
+                        steering_angle_right.append(float(observation[3]) - steering_correction)
+
+                if np.abs(observation[3]) >= 0.5:
+                        left_images.append(preprocess_image(cv2.imread(left_image_path)))
+                        left_images.append(preprocess_image(cv2.imread(left_image_path)))
+
+                        ## append the steering angles and correct for left/right images
+                        steering_angle_left.append(float(observation[3]) + steering_correction)
+                        steering_angle_right.append(float(observation[3]) - steering_correction)
+
+
+                        ## flip images
+                        right_images.append(preprocess_image(cv2.flip(cv2.imread(left_image_path), 1)))
+                        left_images.append(preprocess_image(cv2.flip(cv2.imread(right_image_path), 1)))
+
+
+                        ## append the steering angles and correct for left/right images
+                        steering_angle_left.append(float(observation[3]) + steering_correction)
+                        steering_angle_right.append(float(observation[3]) - steering_correction)
 
             images = center_images + left_images + right_images
             steering_angles = steering_angle_center + steering_angle_left + steering_angle_right
