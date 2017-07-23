@@ -90,22 +90,20 @@ def generate_data(observations, batch_size=128):
                         left_images.append(preprocess_image(cv2.flip(cv2.imread(right_image_path), 1)))
 
                         ## append the steering angles and correct for left/right images
-                        steering_angle_left.append(float(observation[3]) + steering_correction)
-                        steering_angle_right.append(float(observation[3]) - steering_correction)
+                        steering_angle_left.append(float(observation[3])*-1 + steering_correction)
+                        steering_angle_right.append(float(observation[3])*-1 - steering_correction)
 
                 if np.abs(float(observation[3])) >= 0.5:
                         left_images.append(preprocess_image(cv2.imread(left_image_path)))
-                        left_images.append(preprocess_image(cv2.imread(left_image_path)))
+                        right_images.append(preprocess_image(cv2.imread(right_image_path)))
 
                         ## append the steering angles and correct for left/right images
                         steering_angle_left.append(float(observation[3]) + steering_correction)
                         steering_angle_right.append(float(observation[3]) - steering_correction)
 
-
                         ## flip images
                         right_images.append(preprocess_image(cv2.flip(cv2.imread(left_image_path), 1)))
                         left_images.append(preprocess_image(cv2.flip(cv2.imread(right_image_path), 1)))
-
 
                         ## append the steering angles and correct for left/right images
                         steering_angle_left.append(float(observation[3])*-1 + steering_correction)
