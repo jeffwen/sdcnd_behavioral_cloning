@@ -24,6 +24,7 @@ model = None
 prev_image_array = None
 
 
+## throttle controller 
 class SimplePIController:
     def __init__(self, Kp, Ki):
         self.Kp = Kp

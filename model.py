@@ -37,24 +37,22 @@ validation_generator = data.generate_data(validation_observations)
 ## build Keras model
 model = Sequential()
 
-## cropping images
-# model.add(Cropping2D(cropping=((60,20), (0,0)), input_shape=(160,320,3)))
-
 ## batch normlization
 # model.add(BatchNormalization())
 model.add(Lambda(lambda x: x/127.5 - 1.0,input_shape=(80,320,3)))
 
-## Convolutional layers
+## convolutional layers
 model.add(Conv2D(24, 5, 5, subsample=(2,2), activation='elu'))
 model.add(Conv2D(36, 5, 5, subsample=(2,2), activation='elu'))
 model.add(Conv2D(48, 5, 5, subsample=(2,2), activation='elu'))
 model.add(Conv2D(64, 3, 3, activation='elu'))
 model.add(Conv2D(64, 3, 3, activation='elu'))
 
+## dropout
 model.add(Dropout(0.5))
+
 ## fully connected layers
 model.add(Flatten())
-# model.add(Dense(1164, activation='elu'))
 model.add(Dense(100, activation='elu'))
 model.add(Dense(50, activation='elu'))
 model.add(Dense(10, activation='elu'))
