@@ -8,6 +8,8 @@
 [original_simulator_image]: ./media/original_simulator_image.png "Original Simulator Image"
 [cropped_simulator_image]: ./media/cropped_simulator_image.png "Cropped Simulator Image"
 [original_distribution]: ./media/original_distribution.png "Original Distribution"
+[augmented_distribution]: /images/sdcnd/augmented_distribution.png "Augmented Distribution"
+
 [final_gif]: ./media/final.gif "Final Run"
 [recovery_gif]: ./media/recovery.gif "Recovery"
 
@@ -43,7 +45,7 @@ The data took some fiddling to figure out what worked eventual specifications. F
 
 In the above example, we can see that the top portion of every image and even the bottom portion of the image contained extraneous information. After cropping, the performance of the model was improved.
 
-[cropped_simulator_image]
+![cropped_simulator_image]
 
 Futhermore, the NVIDIA paper used the YUV channel in their implementation and I similarly chose to use the YUV channel after experimenting between RGB, BGR, and the YUV channels. 
 
@@ -58,7 +60,7 @@ As seen in the image above, the distribution of the data is heavily skewed towar
 
 However, in addition to manually trying to augment data I also forced the distribution to be more uniform by downsampling the over represented steering angles and upsampling the underrepresented ones. I created a histogram and randomly chose up to observations that fell into a particular bucket to get the total number of observations up to 500.
 
-![augmented_distribtion]
+![augmented_distribution]
 
 The resulting data distribution was much more uniform and resulted in the car being able to correct for even severe mistakes (such as driving too far to one side of the track and hitting the apex). The below gif shows the model trained using the augmented data. We can see that even though the vehicle gets close to the apex/side of the road, it is able to navigate back to the center of the track.
 
