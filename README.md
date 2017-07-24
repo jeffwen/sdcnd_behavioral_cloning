@@ -3,9 +3,9 @@
 [//]: # (Image References)
 [final_gif]: ./media/final.gif "Final Run"
 
-This project uses a convolutional neural network to clone driving behavior (from a driving simulator). The input were frames from a recorded video and the output was the steering angle. Read more about the project [here](https://github.com/jeffwen/sdcnd_behavioral_cloning/blob/master/behavioral_cloning.md). Check out the model running through the final 2 corners of the test track!
+This project uses a convolutional neural network to clone driving behavior (from a driving simulator). The input were frames from a recorded video and the output was the steering angle. Read more about the project [here](https://github.com/jeffwen/sdcnd_behavioral_cloning/blob/master/behavioral_cloning.md). Check out the model running through the final 2 corners of the test track; the [video](https://vimeo.com/226684813) is not the best quality!
 
-![[final_gif]]
+![final_gif]
 
 Below is an example of the output driving from the model that was built using Keras with a Tensorflow backend. The model architecure was adapted from NVIDIA's _[End to End Learning for Self-Driving Cars](https://arxiv.org/pdf/1604.07316v1.pdf)_ paper. 
 
